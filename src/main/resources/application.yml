@@ -1,0 +1,25 @@
+spring:
+  freemarker:
+    check-template-location: false
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/postgres?stringtype=unspecified&currentSchema=public
+    username: postgres
+    password: 123456
+  jpa:
+    generate-ddl: true
+    hibernate:
+      ddl-auto: update
+    database: postgresql
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    show-sql: false
+    open-in-view: false
+    properties:
+      jakarta:
+        persistence:
+          sharedCache:
+            mode: ALL
+      hibernate:
+        temp:
+          use_jdbc_metadata_defaults: false
+      MaxImageSizeInMB: 100   
