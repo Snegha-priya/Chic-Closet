@@ -8,7 +8,6 @@ import org.springframework.stereotype.Repository;
 import com.chiccloset.entitymodel.RolesModel;
 
 
-
 @Repository
 public interface RolesRepository extends JpaRepository<RolesModel, Long> {
 

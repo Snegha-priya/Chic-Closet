@@ -12,4 +12,6 @@ public interface UsersRepository extends JpaRepository<UsersModel, Long> {
 
 	UsersModel findByMobileNumberAndActive(String mobileNumber, boolean active);
 
+	UsersModel findByEmail(String email);
+
 }
