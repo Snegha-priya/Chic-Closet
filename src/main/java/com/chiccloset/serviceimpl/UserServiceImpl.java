@@ -2,6 +2,8 @@ package com.chiccloset.serviceimpl;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.time.LocalDateTime;
+import java.util.Base64;
 import java.util.Objects;
 
 import javax.xml.bind.DatatypeConverter;
@@ -33,46 +35,53 @@ public class UserServiceImpl implements UserService {
 
 	@Transactional
 	public String signUp(SignUpDTO signupDto) {
-		// check if user is already present
-		if (Objects.nonNull(userRepository.findByEmail(signupDto.getEmail()))) {
-			// we have an user
-			throw new CustomException("user already present");
-		}
+	    // check if user is already present
+	    if (Objects.nonNull(userRepository.findByEmail(signupDto.getEmail()))) {
+	        // we have an user
+	        throw new CustomException("user already present");
+	    }
 
-		// hash the password
+	    // hash the password
+	    String encryptedPassword = hashPassword(signupDto.getPassword());
 
-		String encryptedpassword = signupDto.getPassword();
+	    UsersModel user = UsersModel.builder()
+	            .firstName(signupDto.getFirstName())
+	            .lastName(signupDto.getLastName())
+	            .email(signupDto.getEmail())
+	            .password(encryptedPassword)
+	            .build();
 
-		try {
-			encryptedpassword = hashPassword(signupDto.getPassword());
-		} catch (NoSuchAlgorithmException e) {
-			e.printStackTrace();
-		}
+	    userRepository.save(user);
 
-		UsersModel user = UsersModel.builder().firstName(signupDto.getFirstName()).lastName(signupDto.getLastName())
-				.email(signupDto.getEmail()).password(encryptedpassword).build();
-		userRepository.save(user);
+	    // create the token
+	    String token = createToken(signupDto.getEmail(), signupDto.getPassword());
+      AuthenticationToken authenticationToken=new AuthenticationToken();
+      authenticationToken.setToken(token);
+      authenticationToken.setUser(user);
+      authenticationToken.setCreatedDate(LocalDateTime.now());
+	    authenticationService.saveConfirmationToken(authenticationToken);
 
-		// save the user
-
-		// create the token
-
-		final AuthenticationToken authenticationToken = new AuthenticationToken(null, encryptedpassword, null, user);
-
-		authenticationService.saveConfirmationToken(authenticationToken);
-
-		String responseDto = "user created succesfully";
-		return responseDto;
+	    return "user created successfully";
 	}
 
-	private String hashPassword(String password) throws NoSuchAlgorithmException {
-		MessageDigest md = MessageDigest.getInstance("MD5");
-		md.update(password.getBytes());
-		byte[] digest = md.digest();
-		String hash = DatatypeConverter.printHexBinary(digest).toUpperCase();
-		return hash;
+	private String hashPassword(String password) {
+	    try {
+	        MessageDigest md = MessageDigest.getInstance("MD5");
+	        md.update(password.getBytes());
+	        byte[] digest = md.digest();
+	        return DatatypeConverter.printHexBinary(digest).toUpperCase();
+	    } catch (NoSuchAlgorithmException e) {
+	        e.printStackTrace();
+	        // Handle hashing error
+	        return null;
+	    }
 	}
 
+	private String createToken(String email, String password) {
+	    String credentials = email + ":" + password;
+	    byte[] encodedBytes = Base64.getEncoder().encode(credentials.getBytes());
+	    return new String(encodedBytes);
+	}
 	public SignInReponseDTO signIn(SignInDTO signInDto) {
 		// find user by email
 
@@ -88,7 +97,7 @@ public class UserServiceImpl implements UserService {
 			if (!user.getPassword().equals(hashPassword(signInDto.getPassword()))) {
 				throw new AuthenticationFailException("wrong password");
 			}
-		} catch (NoSuchAlgorithmException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 

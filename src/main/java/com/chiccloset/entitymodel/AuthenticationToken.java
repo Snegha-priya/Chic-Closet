@@ -1,5 +1,6 @@
 package com.chiccloset.entitymodel;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.UUID;
 
@@ -26,11 +27,11 @@ public class AuthenticationToken {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
 	private Integer id;
-
+  
 	private String token;
 
 	@Column(name = "created_date")
-	private Date createdDate;
+	private LocalDateTime createdDate;
 
 	@OneToOne(targetEntity = UsersModel.class, fetch = FetchType.EAGER)
 	@JoinColumn(nullable = false, name = "user_id")
