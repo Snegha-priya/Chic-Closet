@@ -55,8 +55,8 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 		return entity;
 	}
 
-	@ExceptionHandler(VaruvaaiException.class)
-	public ResponseEntity<String> VaruvaaiException(VaruvaaiException exception, WebRequest webRequest,
+	@ExceptionHandler(ChicClosetException.class)
+	public ResponseEntity<String> VaruvaaiException(ChicClosetException exception, WebRequest webRequest,
 			HandlerMethod handler) {
 		ResponseEntity<String> entity = new ResponseEntity<String>(exception.getMessage(),
 				HttpStatus.BAD_REQUEST);

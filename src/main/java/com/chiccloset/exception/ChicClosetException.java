@@ -1,9 +1,9 @@
 package com.chiccloset.exception;
 
-public class EcommerceException extends RuntimeException {
+public class ChicClosetException extends RuntimeException {
 	private static final long serialVersionUID = 1L;
 
-	public EcommerceException(String message) {
+	public ChicClosetException(String message) {
 		super(message);
 	}
 }

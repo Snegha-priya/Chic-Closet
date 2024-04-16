@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 import com.chiccloset.ApiCaller;
 import com.chiccloset.dto.ContactUsDTO;
 import com.chiccloset.entitymodel.ContactUsModel;
-import com.chiccloset.exception.VaruvaaiException;
+import com.chiccloset.exception.ChicClosetException;
 import com.chiccloset.repository.ContactUsRepository;
 import com.chiccloset.service.ContactUsService;
 
@@ -84,7 +84,7 @@ public class ContactUsServiceImpl implements ContactUsService {
 			contactUsRepository.deleteByIdAndActive(id, true);
 			return "Success";
 		} else {
-			throw new VaruvaaiException("1010");
+			throw new ChicClosetException("1010");
 		}
 	}
 	// list

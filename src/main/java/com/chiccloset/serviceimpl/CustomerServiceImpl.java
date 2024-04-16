@@ -19,7 +19,7 @@ import com.chiccloset.dto.CustomerDTO;
 import com.chiccloset.dto.CustomerListDTO;
 import com.chiccloset.entitymodel.CustomerAddressModel;
 import com.chiccloset.entitymodel.CustomerModel;
-import com.chiccloset.exception.EcommerceException;
+import com.chiccloset.exception.ChicClosetException;
 import com.chiccloset.repository.CustomerAddressRepository;
 import com.chiccloset.repository.CustomerRepository;
 import com.chiccloset.service.CustomerService;
@@ -70,7 +70,7 @@ public class CustomerServiceImpl implements CustomerService {
 		CustomerDTO customerDTO = new CustomerDTO();
 
 		if (id == 0) {
-			throw new EcommerceException("1010");
+			throw new ChicClosetException("1010");
 		}
 
 		CustomerModel customerModel = customerRepository.findByIdAndActive(id, true);

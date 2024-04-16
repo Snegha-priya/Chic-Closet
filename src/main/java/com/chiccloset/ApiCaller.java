@@ -12,8 +12,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import com.chiccloset.config.DatasourceConfigUtil;
-import com.chiccloset.exception.VaruvaaiException;
-
+import com.chiccloset.exception.ChicClosetException;
 @Component
 public class ApiCaller  {
 
@@ -34,7 +33,7 @@ public class ApiCaller  {
 			HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 			return response.body();
 		} catch (Exception e) {
-			throw new VaruvaaiException("Unable to fetch Image :: " + fileName);
+			throw new ChicClosetException("Unable to fetch Image :: " + fileName);
 		}
 	}
 
@@ -52,7 +51,7 @@ public class ApiCaller  {
 			HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 			return response.body();
 		} catch (Exception e) {
-			throw new VaruvaaiException("Save Failed");
+			throw new ChicClosetException("Save Failed");
 		}
 	}
 
@@ -72,7 +71,7 @@ public class ApiCaller  {
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
             return response.body();
         } catch (Exception e) {
-            throw new VaruvaaiException("Unable to delete Image :: " + fileName);
+            throw new ChicClosetException("Unable to delete Image :: " + fileName);
         }
     }
 	public String invokeTrashEndpoint(String fileName) {
