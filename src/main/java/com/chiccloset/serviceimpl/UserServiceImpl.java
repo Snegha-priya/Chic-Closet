@@ -49,6 +49,10 @@ public class UserServiceImpl implements UserService {
 	            .lastName(signupDto.getLastName())
 	            .email(signupDto.getEmail())
 	            .password(encryptedPassword)
+	            .enabled(true)
+	            .active(true)
+	            .createdTime(LocalDateTime.now())
+	            .mobileNumber(signupDto.getMobileNumber())
 	            .build();
 
 	    userRepository.save(user);

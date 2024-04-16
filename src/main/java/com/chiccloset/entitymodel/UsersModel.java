@@ -41,7 +41,6 @@ public class UsersModel {
 	private int tenantid;
 	private int failedloginattempt;
 	private Boolean enabled;
-	private LocalDateTime lastLoginTime;
 
 	private Boolean active;
 	@Column(columnDefinition = "TEXT")
