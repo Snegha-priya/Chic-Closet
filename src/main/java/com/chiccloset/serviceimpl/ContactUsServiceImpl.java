@@ -1,5 +1,6 @@
 package com.chiccloset.serviceimpl;
 
+import java.sql.SQLException;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -50,8 +51,7 @@ public class ContactUsServiceImpl implements ContactUsService {
 
 			if (contactUsDTO.getImage() != null && contactUsDTO.getImage().length > 0) {
 				if (!Arrays.equals(contactUsDTO.getImage(), "something".getBytes())) {
-					String filename = apiCaller.invokeSaveEndpoint(contactUsDTO.getImageName(), contactUsDTO.getImage(),
-							"public");
+					String filename = apiCaller.invokeSaveEndpoint(contactUsDTO.getImageName(), contactUsDTO.getImage());
 					contactUsModel.setImageName(filename);
 					if (!existingImageName.isEmpty()) {
 						apiCaller.invokeTrashEndpoint(existingImageName);
@@ -79,7 +79,7 @@ public class ContactUsServiceImpl implements ContactUsService {
 		ContactUsModel contactUsModel = contactUsRepository.findByIdAndActive(id, true);
 		if (contactUsModel != null) {
 			String fileName = contactUsModel.getImageName();
-			String response = apiCaller.invokeRemoveEndpoint(fileName,"public");
+			String response = apiCaller.invokeRemoveEndpoint(fileName);
 			// Check response or handle accordingly
 			contactUsRepository.deleteByIdAndActive(id, true);
 			return "Success";
@@ -101,7 +101,11 @@ public class ContactUsServiceImpl implements ContactUsService {
 				// image logic
 				String imageUrl = "";
 				if (contactUsModel.getImageName() != null && !contactUsModel.getImageName().isEmpty()) {
-					imageUrl = apiCaller.invokeGetEndpoint(1, contactUsModel.getImageName(), "public");
+					try {
+						imageUrl = apiCaller.invokeGetEndpoint(1, contactUsModel.getImageName());
+					} catch (SQLException e) {
+						e.printStackTrace();
+					}
 				}
 				ContactUsDTO contactUsDTO = ContactUsDTO.builder().id(contactUsModel.getId())
 						.title(contactUsModel.getTitle()).description(contactUsModel.getDescription())

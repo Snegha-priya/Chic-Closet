@@ -12,34 +12,35 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.chiccloset.dto.ContactUsDTO;
-import com.chiccloset.service.ContactUsService;
+import com.chiccloset.dto.OrderDTO;
+import com.chiccloset.service.OrderService;
+
 
 @RestController
-public class ContactUsController {
+public class OrderController {
 
 	@Autowired
-	private ContactUsService contactUsService;
+	private OrderService orderService;
 
 	// save
-	@PostMapping("/save")
-	public ResponseEntity<String> save(@RequestBody List<ContactUsDTO> contactUsDTOList) {
-		String response = contactUsService.save(contactUsDTOList);
+	@PostMapping("/ordersave")
+	public ResponseEntity<String> save(@RequestBody OrderDTO orderDTOList) {
+		String response = orderService.save(orderDTOList);
 		return new ResponseEntity<>(response, HttpStatus.CREATED);
 	}
 
 	// delete
-	@DeleteMapping(value = "/remove")
+	@DeleteMapping(value = "/orderremove")
 	public ResponseEntity<String> remove(@RequestParam Long id) {
-		String response = contactUsService.remove(id);
+		String response = orderService.remove(id);
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
 
 	// list
 
-	@GetMapping("/list")
-	public ResponseEntity<List<ContactUsDTO>> list() {
-		List<ContactUsDTO> contactUsDTOList = contactUsService.list();
+	@GetMapping("/orderlist")
+	public ResponseEntity<List<OrderDTO>> list() {
+		List<OrderDTO> contactUsDTOList = orderService.list();
 		return ResponseEntity.ok(contactUsDTOList);
 	}
 

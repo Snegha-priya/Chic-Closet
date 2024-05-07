@@ -28,9 +28,11 @@ public class UserController {
 
 	// signin
 	@PostMapping("/signin")
-	public ResponseEntity<String> signin(@RequestBody SignInDTO signinDto) {
+	public ResponseEntity<SignInReponseDTO> signin(@RequestBody SignInDTO signinDto) {
+		System.out.println(signinDto);
 		SignInReponseDTO response = userService.signIn(signinDto);
-		return new ResponseEntity<String>(HttpStatus.OK);
+		System.out.println(response);
+		return new ResponseEntity<SignInReponseDTO>(response,HttpStatus.OK);
 
 	}
 

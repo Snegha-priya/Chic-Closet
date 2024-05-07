@@ -1,5 +1,6 @@
 package com.chiccloset.entitymodel;
 
+import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 
 import jakarta.persistence.Entity;
@@ -15,18 +16,17 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 @Builder
-@Entity(name = "category")
-public class CategoryModel {
+@Entity(name = "report")
+public class ReportModel {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	private String name;
-	private String description;
-	private String imageName;
-
-	private Boolean active;
-	private String createdBy;
-	private ZonedDateTime createdTime;
-	private String modifiedBy;
-	private ZonedDateTime modifiedTime;
+	private String customerid;
+	private LocalDateTime ordertime;
+    private LocalDateTime endDate;
+    private String orderitem;
+    private double price;
+    private boolean active;
+    private LocalDateTime createdtime;
+    private String CreatedBy;
 }

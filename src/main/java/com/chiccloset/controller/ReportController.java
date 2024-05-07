@@ -1,33 +1,29 @@
 package com.chiccloset.controller;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.chiccloset.dto.CategoryDTO;
-import com.chiccloset.dto.ContactUsDTO;
-import com.chiccloset.service.CategoryService;
-import com.chiccloset.service.ContactUsService;
+import com.chiccloset.dto.AddressDTO;
+import com.chiccloset.service.AddressService;
+import com.chiccloset.service.ReportService;
 
 @RestController
-public class CategoryController {
+public class ReportController {
 
 	@Autowired
-	private CategoryService categoryService;
+	private ReportService reportService;
 
 	// save
-	@PostMapping("/save")
-	public ResponseEntity<String> save(@RequestBody List<CategoryDTO> categoryDTOList) {
-		String response = categoryService.save(categoryDTOList);
+	@GetMapping("/getreport")
+	public ResponseEntity<String> getReport() {
+		String response = reportService.getReport();
 		return new ResponseEntity<>(response, HttpStatus.CREATED);
 	}
-
 }
+
