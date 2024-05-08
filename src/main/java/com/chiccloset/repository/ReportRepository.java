@@ -8,4 +8,6 @@ import com.chiccloset.entitymodel.ReportModel;
 @Repository
 public interface ReportRepository extends JpaRepository<Long, ReportModel> {
 
+	ReportModel findByIdAndActive(long id, boolean active);
+
 }

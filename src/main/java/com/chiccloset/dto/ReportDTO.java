@@ -16,7 +16,7 @@ import lombok.NoArgsConstructor;
 @JsonInclude(value = JsonInclude.Include.NON_EMPTY, content = JsonInclude.Include.NON_NULL)
 public class ReportDTO {
 	private Long id;
-	private Long customerid;
+	private String customerid;
 	private LocalDateTime ordertime;
     private LocalDateTime endDate;
     private String orderitem;
